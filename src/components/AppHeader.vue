@@ -2,7 +2,7 @@
 export default {
   data() {
     return { 
-      message: 'Template Vite + Vue'
+      message: 'Yu-Gi-Oh API'
     }
   }
 }
@@ -18,13 +18,13 @@ export default {
 
 <style lang="scss" scoped>
 
-header {
-  background-color: red;
-  text-align: center;
-  padding: 20px 0;
-}
+	header {
 
-h1 {
-  color: blue;
-}
+		border: 2px solid black;
+		text-align: center;
+		padding: 20px 0;
+		
+	}
+
+
 </style>

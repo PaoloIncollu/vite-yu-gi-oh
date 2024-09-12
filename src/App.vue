@@ -14,6 +14,9 @@ import { store } from './store.js';
 export default {
   data() {
     return { 
+
+      store,
+      allCard:[]
       
     }
   },
@@ -25,18 +28,18 @@ export default {
   },
   methods: {
     
-  }/*,
+  },
 created() {
     axios
-      .get(...)
+      .get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0')
       .then((res) => {
         console.log('OGGETTO CREATO DA AXIOS:', res);
-        console.log('DATI CHE CI HA RISPOSTO IL SERVER:', res.data);
-        console.log('TUTTI I PERSONAGGI:', res.data.results);
-
-        this.store.allCharacters = res.data.results;
-      });
-  }*/
+        console.log('DATI CHE CI HA RISPOSTO IL SERVER:', res.data.data);
+		console.log('DATI CHE CI HA RISPOSTO IL SERVER:', res.data.data[0].card_images.image_url);
+        this.store.allCard = res.data.data;
+	
+    });
+  }
 }
 </script>
 
