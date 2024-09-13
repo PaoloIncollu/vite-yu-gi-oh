@@ -16,8 +16,8 @@ export default {
     return { 
 
       store,
-      allCard:[]
-      
+      allCard:[],
+      allArchetype:[]
     }
   },
   // 2) Dichiarazione del componente
@@ -26,21 +26,41 @@ export default {
     AppMain,
     AppFooter
   },
-  methods: {
+  created() {
     
-  },
-created() {
-    axios
-      .get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0')
-      .then((res) => {
+    this.getDataFromAPi();
+     axios
+      .get('https://db.ygoprodeck.com/api/v7/archetypes.php')
+      .then((arc) => {
+        console.log('archetype CREATO DA AXIOS:', arc);
+        console.log('DATI  archetype CHE CI HA RISPOSTO IL SERVER:', arc.data);
+        this.store.allArchetype = arc.data;
+	  
+    });
+    },
+
+  methods: {
+    getDataFromAPi(){
+
+       axios
+      .get('https://db.ygoprodeck.com/api/v7/cardinfo.php?',{
+
+        params:{
+          archetype:this.store.selectArchetype
+        } 
+      }).then((res) => {
+        
         console.log('OGGETTO CREATO DA AXIOS:', res);
         console.log('DATI CHE CI HA RISPOSTO IL SERVER:', res.data.data);
-		console.log('DATI CHE CI HA RISPOSTO IL SERVER:', res.data.data[0].card_images.image_url);
         this.store.allCard = res.data.data;
 	
-    });
+    }).catch((err) => {
+        this.store.ciao = [];
+      });
+    
   }
-}
+
+}}
 </script>
 
 <template>
@@ -48,7 +68,7 @@ created() {
     <!-- 3) Utilizzo del componente -->
     <AppHeader />
     
-    <AppMain/>
+    <AppMain @searchArchetype="getDataFromApi()"/>
 
     <AppFooter/>
   </div>

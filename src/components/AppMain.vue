@@ -14,6 +14,14 @@ export default {
 
 	SingleCard
 
+  },
+  methods: {
+    searchArchetype(){
+		
+		
+		this.$emit('searchArchetype')
+		
+	}
   }
 }
 
@@ -23,6 +31,22 @@ export default {
 
 	<main>
 
+		
+	<div class="container-select-arc">
+
+		<div>
+			<label for="search" class="form-label fs-2">Seleziona il tipo di carte che vuoi visualizzare</label>
+			<select  id="search" v-model="store.selectArchetype"
+			@$emit="searchArchetype()" class="form-select w-25 h-10">
+
+				<option v-for="(archetype,index) in store.allArchetype" :key="index" :value="archetype.archetype_name">{{ archetype.archetype_name }}</option>
+
+			</select>
+		</div>
+			
+	</div>
+	
+			
 		<div class="my-container-row">
 
 			<div class="row p-5 bg-white">
@@ -46,6 +70,21 @@ export default {
 	main{
 
 		background-color: $bg-main;
+
+		.container-select-arc{
+
+			width: 80%;
+			margin: 0 auto;
+
+			.select-arc{
+
+				width: fit-content;
+				
+				font-size: 30px;
+				
+				
+			}
+		}
 
 		.my-container-row{
 
