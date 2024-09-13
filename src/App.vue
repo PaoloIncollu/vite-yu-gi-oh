@@ -15,9 +15,7 @@ export default {
   data() {
     return { 
 
-      store,
-      allCard:[],
-      allArchetype:[]
+      store
     }
   },
   // 2) Dichiarazione del componente
@@ -28,7 +26,6 @@ export default {
   },
   created() {
     
-    this.getDataFromAPi();
      axios
       .get('https://db.ygoprodeck.com/api/v7/archetypes.php')
       .then((arc) => {
@@ -36,14 +33,10 @@ export default {
         console.log('DATI  archetype CHE CI HA RISPOSTO IL SERVER:', arc.data);
         this.store.allArchetype = arc.data;
 	  
-    });
-    },
-
-  methods: {
-    getDataFromAPi(){
-
-       axios
-      .get('https://db.ygoprodeck.com/api/v7/cardinfo.php?',{
+    }); 
+    
+    axios
+      .get('https://db.ygoprodeck.com/api/v7/cardinfo.php',{
 
         params:{
           archetype:this.store.selectArchetype
@@ -54,9 +47,21 @@ export default {
         console.log('DATI CHE CI HA RISPOSTO IL SERVER:', res.data.data);
         this.store.allCard = res.data.data;
 	
-    }).catch((err) => {
-        this.store.ciao = [];
-      });
+    });
+    },
+    
+    methods: {
+      changeCards() {
+      if(this.store.selectArchetype != '') {
+        axios
+        .get('https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=' + this.store.selectArchetype)
+        .then((res) =>{
+          this.store.allCard = res.data.data;
+          
+        });
+      }
+
+      
     
   }
 
@@ -68,7 +73,7 @@ export default {
     <!-- 3) Utilizzo del componente -->
     <AppHeader />
     
-    <AppMain @searchArchetype="getDataFromApi()"/>
+    <AppMain @changeCards="changeCards()"/>
 
     <AppFooter/>
   </div>

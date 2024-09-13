@@ -1,5 +1,4 @@
 <script>
-
 import SingleCard from './SingleCard.vue';
 import { store } from '../store.js';
 
@@ -9,6 +8,7 @@ export default {
       store
     }
   },
+  
  
   components:{
 
@@ -16,12 +16,7 @@ export default {
 
   },
   methods: {
-    searchArchetype(){
-		
-		
-		this.$emit('searchArchetype')
-		
-	}
+    
   }
 }
 
@@ -32,23 +27,29 @@ export default {
 	<main>
 
 		
-	<div class="container-select-arc">
+	<div class="container-select-arc pt-5">
 
-		<div>
-			<label for="search" class="form-label fs-2">Seleziona il tipo di carte che vuoi visualizzare</label>
-			<select  id="search" v-model="store.selectArchetype"
-			@$emit="searchArchetype()" class="form-select w-25 h-10">
-
-				<option v-for="(archetype,index) in store.allArchetype" :key="index" :value="archetype.archetype_name">{{ archetype.archetype_name }}</option>
+		
+			
+			<select v-model="store.selectArchetype" id="select" class="form-select w-25 h-10 " @change="$emit('changeCards')">
+				
+				<option v-for="(archetype,index) in store.allArchetype" :key="index" :value="archetype.archetype_name">
+					{{ archetype.archetype_name }}
+				</option>
 
 			</select>
-		</div>
+			
+
+			<h2 class="text-center text-danger mt-3">
+				Archetipo delle carte scelto:
+				{{this.store.selectArchetype }}
+			</h2>
 			
 	</div>
 	
 			
 		<div class="my-container-row">
-
+			
 			<div class="row p-5 bg-white">
 
 				<div v-for="(card,index) in store.allCard" :key="index" class="col-12 col-sm-6 col-md-3 pb-3 ">
